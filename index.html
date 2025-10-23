@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RPC Taller - Casos de Estudio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #0a58ca;
+            --bg-light: #f8f9fa;
+            --text-color: #212529;
+            --muted-color: #6c757d;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            font-family: 'Inter', system-ui, sans-serif;
+            color: var(--text-color);
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+        }
+
+        p.lead {
+            font-size: 0.95rem;
+            color: var(--muted-color);
+        }
+
+        .logo-uteg {
+            max-height: 60px;
+        }
+
+        .card {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+        }
+
+        .card-header {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--primary-color);
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .form-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .form-control {
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 6px;
+            padding: 0.45rem 1rem;
+        }
+
+        .btn i {
+            font-size: 0.95rem;
+        }
+
+        .btn-primary,
+        .btn-success,
+        .btn-warning,
+        .btn-info,
+        .btn-dark,
+        .btn-danger,
+        .btn-secondary {
+            color: #fff;
+            border: none;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        .btn:hover {
+            opacity: 0.85;
+        }
+
+        .result-container {
+            border-radius: 8px;
+            background-color: #f6f8fa;
+            color: #212529;
+            font-size: 0.9rem;
+            border: 1px solid #dee2e6;
+        }
+
+        .result-container pre {
+            background: #fff;
+            color: #333;
+            border-radius: 6px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .spinner-border {
+            width: 2rem;
+            height: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                text-align: center;
+            }
+
+            .logo-uteg {
+                margin-top: 1rem;
+            }
+
+            .btn {
+                width: 100%;
+                margin-top: 0.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-4">
+        <header>
+            <div>
+                <h1>RPC Node.js - Casos de Estudio</h1>
+                <p class="lead mb-0">Sistema de consulta de usuarios mediante RPC</p>
+            </div>
+            <img src="https://www.uteg.edu.ec/wp-content/uploads/2022/09/logo-b-300x99.jpg" alt="Logo UTEG"
+                class="logo-uteg" />
+        </header>
+
+        <!-- Caso 1 -->
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="bi bi-person-badge me-1"></i> Caso 1: Tipos de datos simples
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="nombre" class="form-label">Nombre de usuario</label>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text"><i class="bi bi-person"></i></span>
+                            <input type="text" id="nombre" class="form-control" placeholder="Ejemplo: root" />
+                        </div>
+                        <button id="btnUid" class="btn btn-primary mt-2 w-100">
+                            <i class="bi bi-key me-1"></i> Obtener UID
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="uid" class="form-label">UID</label>
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text"><i class="bi bi-123"></i></span>
+                            <input type="number" id="uid" class="form-control" placeholder="Ejemplo: 0" />
+                        </div>
+                        <button id="btnNombre" class="btn btn-success mt-2 w-100">
+                            <i class="bi bi-person me-1"></i> Obtener Nombre
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Caso 2 -->
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="bi bi-people me-1"></i> Caso 2: Tipos compuestos
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="uid1" class="form-label">UID 1</label>
+                        <input type="number" id="uid1" class="form-control form-control-sm" placeholder="Ejemplo: 0" />
+                        <label for="uid2" class="form-label mt-2">UID 2</label>
+                        <input type="number" id="uid2" class="form-control form-control-sm"
+                            placeholder="Ejemplo: 1000" />
+                        <button id="btnMismoGid" class="btn btn-warning mt-3 w-100">
+                            <i class="bi bi-check2-circle me-1"></i> Verificar mismo GID
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="nombreUgid" class="form-label">Nombre</label>
+                        <input type="text" id="nombreUgid" class="form-control form-control-sm"
+                            placeholder="Ejemplo: root" />
+                        <button id="btnUgid" class="btn btn-info mt-3 w-100">
+                            <i class="bi bi-person-vcard me-1"></i> Obtener UID/GID
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Caso 3 -->
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="bi bi-search me-1"></i> Caso 3: Uso de tipo union (XDR)
+            </div>
+            <div class="card-body">
+                <label for="query" class="form-label">Consulta (número o texto)</label>
+                <input type="text" id="query" class="form-control form-control-sm"
+                    placeholder="Ejemplo: 1000 o 'usuario'" />
+                <div class="text-center mt-3">
+                    <button id="btnConsultarUsuario" class="btn btn-secondary px-4">
+                        <i class="bi bi-search me-1"></i> Consultar Usuario
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Caso 4 -->
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="bi bi-list-ul me-1"></i> Caso 4: Vectores
+            </div>
+            <div class="card-body text-center">
+                <button id="btnListarUsuarios" class="btn btn-dark w-100">
+                    <i class="bi bi-people-fill me-1"></i> Listar Usuarios
+                </button>
+            </div>
+        </div>
+
+        <!-- Caso 5 -->
+        <div class="card mb-3">
+            <div class="card-header">
+                <i class="bi bi-exclamation-triangle me-1"></i> Caso 5: Manejo de errores
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <button id="btnComandoValido" class="btn btn-success w-100">
+                            <i class="bi bi-check-lg me-1"></i> Comando Válido
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <button id="btnComandoInvalido" class="btn btn-danger w-100">
+                            <i class="bi bi-x-circle me-1"></i> Comando Inválido
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading -->
+        <div id="loading" class="loading">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="mt-2 small text-muted">Procesando solicitud...</p>
+        </div>
+
+        <!-- Resultado -->
+        <div id="resultado" class="card result-container d-none mt-4">
+            <div class="card-header bg-light text-dark">
+                <i class="bi bi-card-text me-1"></i> Resultado
+            </div>
+            <div class="card-body">
+                <pre id="resultadoTexto"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = '/api/v1/consul';
+
+        // Mostrar notificación con SweetAlert
+        function mostrarNotificacion(titulo, mensaje, tipo = 'info') {
+            Swal.fire({
+                title: titulo,
+                text: mensaje,
+                icon: tipo,
+                confirmButtonColor: '#4361ee',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+
+        // Mostrar/ocultar loading
+        function toggleLoading(mostrar) {
+            document.getElementById('loading').style.display = mostrar ? 'block' : 'none';
+        }
+
+        // Mostrar resultado
+        function mostrarResultado(data) {
+            const resultado = document.getElementById('resultado');
+            const resultadoTexto = document.getElementById('resultadoTexto');
+
+            resultadoTexto.textContent = JSON.stringify(data, null, 2);
+            resultado.classList.remove('d-none');
+            resultado.classList.remove('alert-danger');
+            resultado.classList.add('alert-info');
+
+            // Scroll al resultado
+            resultado.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Mostrar error
+        function mostrarError(error) {
+            const resultado = document.getElementById('resultado');
+            const resultadoTexto = document.getElementById('resultadoTexto');
+
+            resultadoTexto.textContent = `Error: ${error}`;
+            resultado.classList.remove('d-none');
+            resultado.classList.remove('alert-info');
+            resultado.classList.add('alert-danger');
+
+            // Scroll al resultado
+            resultado.scrollIntoView({ behavior: 'smooth' });
+
+            // Mostrar notificación de error
+            mostrarNotificacion('Error', error, 'error');
+        }
+
+        // Hacer petición a la API
+        async function hacerPeticion(endpoint, data) {
+            toggleLoading(true);
+
+            try {
+                const response = await fetch(`${API_BASE}${endpoint}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (response.ok) {
+                    mostrarResultado(result);
+                    mostrarNotificacion('Éxito', 'Operación completada correctamente', 'success');
+                } else {
+                    mostrarError(result.error || result.message || 'Error desconocido');
+                }
+            } catch (error) {
+                mostrarError(error.message);
+            } finally {
+                toggleLoading(false);
+            }
+        }
+
+        // Validar campo vacío
+        function validarCampo(valor, mensaje) {
+            if (!valor || valor.trim() === '') {
+                mostrarNotificacion('Campo requerido', mensaje, 'warning');
+                return false;
+            }
+            return true;
+        }
+
+        // Caso 1: Servicios con tipos de datos simples
+        document.getElementById('btnUid').addEventListener('click', () => {
+            const nombre = document.getElementById('nombre').value;
+            if (!validarCampo(nombre, 'Por favor ingrese un nombre de usuario')) return;
+
+            hacerPeticion('/getCaso1-Rcp', {
+                method: 'OBTENER_UID',
+                params: { nombre }
+            });
+        });
+
+        document.getElementById('btnNombre').addEventListener('click', () => {
+            const uid = document.getElementById('uid').value;
+            if (!validarCampo(uid, 'Por favor ingrese un UID')) return;
+
+            hacerPeticion('/getCaso1-Rcp', {
+                method: 'OBTENER_NOMBRE',
+                params: { uid: parseInt(uid) }
+            });
+        });
+
+        // Caso 2: Tipos de datos compuestos
+        document.getElementById('btnMismoGid').addEventListener('click', () => {
+            const uid1 = document.getElementById('uid1').value;
+            const uid2 = document.getElementById('uid2').value;
+
+            if (!validarCampo(uid1, 'Por favor ingrese el primer UID') ||
+                !validarCampo(uid2, 'Por favor ingrese el segundo UID')) return;
+
+            hacerPeticion('/getCaso2', {
+                method: 'MISMO_GID',
+                params: { uid1: parseInt(uid1), uid2: parseInt(uid2) }
+            });
+        });
+
+        document.getElementById('btnUgid').addEventListener('click', () => {
+            const nombre = document.getElementById('nombreUgid').value;
+            if (!validarCampo(nombre, 'Por favor ingrese un nombre de usuario')) return;
+
+            hacerPeticion('/getCaso2', {
+                method: 'OBTENER_UGID',
+                params: { nombre }
+            });
+        });
+
+        // Caso 3: Uso de tipo union (XDR)
+        document.getElementById('btnConsultarUsuario').addEventListener('click', () => {
+            const query = document.getElementById('query').value;
+            if (!validarCampo(query, 'Por favor ingrese una consulta')) return;
+
+            hacerPeticion('/getCaso3XDR', {
+                method: 'CONSULTAR_USUARIO',
+                params: { query }
+            });
+        });
+
+        // Caso 4: Vectores de tamaño variable
+        document.getElementById('btnListarUsuarios').addEventListener('click', () => {
+            hacerPeticion('/getCaso4Vectores', {
+                method: 'LISTAR_USUARIOS'
+            });
+        });
+
+        // Caso 5: Manejo de errores
+        document.getElementById('btnComandoValido').addEventListener('click', () => {
+            hacerPeticion('/getCaso5Errores', {
+                method: 'COMANDO_VALIDO'
+            });
+        });
+
+        document.getElementById('btnComandoInvalido').addEventListener('click', () => {
+            hacerPeticion('/getCaso5Errores', {
+                method: 'COMANDO_INVALIDO'
+            });
+        });
+    </script>
+</body>
+
+</html>
