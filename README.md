@@ -1,6 +1,9 @@
 # RPC Taller - Casos de Estudio
 
+**Autor**: Pedro Echeverria A.
+
 Este proyecto implementa un sistema RPC (Remote Procedure Call) simulado usando Node.js y Express, que demuestra diferentes casos de estudio para el manejo de tipos de datos y comunicación entre cliente y servidor.
+
 
 ## Características Implementadas
 
